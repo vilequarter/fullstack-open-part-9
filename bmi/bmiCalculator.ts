@@ -1,5 +1,3 @@
-require.main === module;
-
 interface BmiValues {
   height: number;
   weight: number;
@@ -15,7 +13,7 @@ const parseArguments = (args: string[]): BmiValues => {
       weight: Number(args[3])
     };
   } else {
-    throw new Error('Provided values were not numbers')
+    throw new Error('Provided values were not numbers');
   }
 };
 

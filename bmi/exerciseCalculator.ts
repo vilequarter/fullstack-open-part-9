@@ -19,7 +19,7 @@ const parseExerciseArguments = (args: string[]): ExerciseDetails => {
   if(args.length < 4) throw new Error('Not enough arguments');
 
   args.slice(2).map(n => {
-    if(isNaN(Number(n))) throw new Error('Provided values were not numbers')
+    if(isNaN(Number(n))) throw new Error('Provided values were not numbers');
   });
 
   const targetHours = Number(args[2]);
