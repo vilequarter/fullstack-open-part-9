@@ -10,6 +10,30 @@ interface Analysis {
   average: number
 };
 
+interface ExerciseDetails {
+  hours: number[];
+  targetHours: number;
+};
+
+const parseExerciseArguments = (args: string[]): ExerciseDetails => {
+  if(args.length < 4) throw new Error('Not enough arguments');
+
+  args.slice(2).map(n => {
+    if(isNaN(Number(n))) throw new Error('Provided values were not numbers')
+  });
+
+  const targetHours = Number(args[2]);
+  const hours = args.slice(3)
+    .map(n => {
+      return Number(n);
+  });
+
+  return {
+    hours: hours,
+    targetHours: targetHours
+  };
+};
+
 const calculateExercises = (hours: number[], targetHours: number): Analysis => {
   const periodLength = hours.length;
 
@@ -48,4 +72,16 @@ const calculateExercises = (hours: number[], targetHours: number): Analysis => {
   };
 };
 
-console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 2))
+try {
+  const { hours, targetHours } = parseExerciseArguments(process.argv);
+  const details = calculateExercises(hours, targetHours);
+  console.log(details);
+} catch (error: unknown) {
+  let errorMessage = 'Error';
+  if(error instanceof Error) {
+    errorMessage += ': ' + error.message;
+  };
+  console.log(errorMessage);
+};
+
+//console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 2))
