@@ -12,6 +12,15 @@ router.get('/', (_req, res: Response<NonSensitivePatient[]>) => {
   res.send(patients);
 });
 
+router.get('/:id', (req, res: Response<Patient>, next: NextFunction) => {
+  try {
+    const patient = patientService.findPatient(req.params.id);
+    res.send(patient);
+  } catch( error: unknown) {
+    next(error);
+  }
+}); 
+
 const newPatientParser = (req: Request, _res: Response, next: NextFunction) => {
   try {
     NewPatientSchema.parse(req.body);
@@ -35,23 +44,5 @@ router.post('/', newPatientParser, (req: Request<unknown, unknown, NewPatient>, 
 });
 
 router.use(errorMiddleware);
-
-/*
-router.post('/', (req, res) => {
-  try {
-    const newPatient = toNewPatient(req.body);
-
-    const addedPatient = patientService.addPatient(newPatient);
-    console.log('Saving a patient');
-    res.send(addedPatient);
-  } catch (error: unknown) {
-    let errorMessage = 'Error';
-    if (error instanceof Error) {
-      errorMessage += ': ' + error.message;
-    }
-    res.status(400).send(errorMessage);
-  }
-});
-*/
 
 export default router;
