@@ -1,11 +1,10 @@
-import patientData from '../../data/patients';
+import patientData from '../../data/patients-full';
 import { v1 as uuid } from 'uuid';
 
 import { Patient, NonSensitivePatient, NewPatient } from '../types';
 
 let patients: Patient[] = patientData.map(p => {
   return {
-    entries: [],
     ...p
   };
 });
